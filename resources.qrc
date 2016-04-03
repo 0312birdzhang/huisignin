@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>images/eventindicator.png</file>
+        <file>images/add.png</file>
+        <file>images/yes.png</file>
+        <file>images/checked.png</file>
+        <file>images/today.png</file>
+        <file>qml/getrandomTip.js</file>
+        <file>images/setting.png</file>
+        <file>qml/settingPage.qml</file>
+        <file>qml/FirstPage.qml</file>
+        <file>qml/storage.js</file>
+    </qresource>
+</RCC>
