@@ -29,7 +29,7 @@ function loadCombo(model){
                            var rs = tx.executeSql('SELECT * FROM combo')
                            for (var i=0, l = rs.rows.length; i < l; i++){
                                var t = rs.rows.item(i);
-                               console.log("ctitle:"+ t.ctitle);
+                               //console.log("ctitle:"+ t.ctitle);
                                model.append({"ctitle":t.ctitle, "cname":t.cname})
                            }
                        })
@@ -41,5 +41,7 @@ function removeCombo(cname){
                        tx.executeSql('DELETE FROM combo WHERE cname=?;',[cname])
                    })
 }
+
+
 
 

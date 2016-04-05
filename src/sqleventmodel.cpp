@@ -120,3 +120,18 @@ bool SqlEventModel::deleteData(const QString& name,const QDate& date){
     query.bindValue(1,date);
     return query.exec();
 }
+
+bool SqlEventModel::isChecked(const QString& name,const QDate& date){
+    QSqlQuery query;
+    query.prepare("select * from Event where name = ? and startDate = ?");
+    query.bindValue(0,name);
+    query.bindValue(1,date);
+    if (!query.exec()){
+        qFatal("Query failed");
+    }
+     if (query.next()) {
+        return true;
+     }else{
+        return false;
+     }
+}

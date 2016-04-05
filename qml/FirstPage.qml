@@ -92,6 +92,12 @@ Item {
 
     }
 
+    function refreshEvent(){
+        calendar.selectedDate = getNextMonthDay();
+        calendar.selectedDate = new Date();
+        eventsListView.model = tmpModel;
+        eventsListView.model = eventModel.eventsForDate(calendar.selectedDate);
+    }
 
 
     function getNextMonthDay(){
@@ -161,7 +167,7 @@ Item {
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.margins: -1
-                        width: 12
+                        width: parent.width / 4
                         height: width
                         source: "qrc:/images/eventindicator.png"
                     }
@@ -171,7 +177,7 @@ Item {
                         anchors.top: parent.top
                         anchors.right: parent.right
                         anchors.margins: -1
-                        width: 12
+                        width: parent.width / 4
                         height: width
                         source: "qrc:/images/today.png"
                     }
@@ -239,13 +245,11 @@ Item {
                 console.log(currentSelectname)
                 var flag = eventModel.deleteData(currentSelectname,calendar.selectedDate);
                 if(flag){
-                    calendar.selectedDate = getNextMonthDay();
-                    calendar.selectedDate = new Date();
-                    eventsListView.model = tmpModel;
-                    eventsListView.model = eventModel.eventsForDate(calendar.selectedDate);
+                    ST.loadCombo(cbItems);
+                    refreshEvent();
                 }
             }
-            onNo: console.log("didn't copy")
+            onNo: console.log("didn't delete")
             Component.onCompleted: visible = false
 
         }
@@ -259,7 +263,10 @@ Item {
             MouseArea{
                 anchors.fill: parent
                 anchors.margins: -3
-                onClicked: eventsList.visible = true;
+                onClicked: {
+                    refreshEvent();
+                    eventsList.visible = true;
+                }
             }
 
             Image{
@@ -285,24 +292,9 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-
                         if(!eventsList.visible){
-                            var todotext = combo.currentText; //cbItems.get(combo.currentIndex).ctitle;
-                            if(!todotext){
-                                return
-                            }
-
-                            var flag = eventModel.insertData(todotext,calendar.selectedDate,getCurrentTime());
-                            if(flag){
-                                calendar.selectedDate = getNextMonthDay();
-                                calendar.selectedDate = new Date();
-                                eventsListView.model = tmpModel;
-                                eventsListView.model = eventModel.eventsForDate(calendar.selectedDate);
-
-                            }else{
-                                //TODO notify
-                            }
                             eventsList.visible = true;
+                            refreshEvent();
                         }else{
                             eventsList.visible = false;
                         }
@@ -361,6 +353,7 @@ Item {
                         width: parent.width
                         height: 1
                         color: "#eee"
+                        visible: index > 0
                     }
 
                     Column {
@@ -432,13 +425,78 @@ Item {
             height: (parent.height > parent.width ? parent.height * 0.3 - parent.spacing : parent.height)
             visible: !eventsList.visible
 
-            ComboBox {
-                id:combo
-                anchors.left: parent.left
-                anchors.topMargin: 5
-                width: parent.width - 5
-                model:cbItems
-                textRole:"ctitle"
+            ListView {
+                id: comboListView
+                spacing: 4
+                clip: true
+                anchors.fill: parent
+                anchors.margins: 10
+                model: cbItems
+
+                delegate: Rectangle {
+                    width: comboListView.width
+                    height: comboItemColumn.height
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Image {
+                        id:tochecked
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.height - 3
+                        height: width
+                        source: eventModel.isChecked(ctitle)?"qrc:/images/checked.png":"qrc:/images/unchecked.png"
+                    }
+
+                    Rectangle {
+                        width: parent.width
+                        height: 1
+                        color: "#eee"
+                        visible: index > 0
+                        anchors.top:comboItemColumn.top
+                        anchors.topMargin: -8
+                    }
+
+                    Column {
+                        id: comboItemColumn
+                        anchors.top:tochecked.top
+                        anchors.left: parent.left
+                        anchors.leftMargin: 8
+                        anchors.rightMargin:15
+                        anchors.right: tochecked.left
+                        height: comboLabel.height + 10
+
+                        Label {
+                            id: comboLabel
+                            width: parent.width
+                            wrapMode: Text.Wrap
+                            text: ctitle
+                            font.pointSize: 15
+                        }
+                    }
+
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            var flag = eventModel.insertData(ctitle,calendar.selectedDate,getCurrentTime());
+                            if(flag){
+                                tochecked.source = "qrc:/images/checked.png";
+                            }
+                        }
+                    }
+
+
+                }
+            }
+
+            Label{
+                id:settNotify
+                anchors.fill: parent
+                font.pointSize: 15
+                color: "#aaa"
+                width: parent.width
+                font.letterSpacing: 1;
+                wrapMode: Text.Wrap
+                visible: cbItems.count == 0
+                text:"暂无事件，请点击设置添加"
             }
         }
     }

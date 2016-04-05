@@ -52,8 +52,8 @@ import "./getrandomTip.js" as TIP
 ApplicationWindow {
     id:appwindow
     visible: true
-    width: isMobile() ? Screen.width : 640
-    height: isMobile() ? Screen.height : 400
+    width: isMobile() ? Screen.width : 1900
+    height: isMobile() ? Screen.height : 1000
     minimumWidth: 400
     minimumHeight: 300
     color: "#f4f4f4"

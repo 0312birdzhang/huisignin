@@ -13,9 +13,7 @@ Item{
     property string todelete
     property int todeleteIndex
 
-    Component.onDestruction: {
-        ST.loadCombo(cbItems);
-    }
+
     ListModel{
         id:settingModel
     }
@@ -41,6 +39,7 @@ Item{
         model: settingModel
 
         delegate: Rectangle {
+            color: "#00FFFFFF"
             width: settingList.width
             height: eventItemColumn.height
             anchors.horizontalCenter: parent.horizontalCenter
@@ -49,13 +48,16 @@ Item{
                 width: parent.width
                 height: 1
                 color: "#eee"
+                visible: index > 0
+                anchors.top:eventItemColumn.top
+                anchors.topMargin: -8
             }
 
             Column {
                 id: eventItemColumn
                 anchors.top:parent.top
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 15
                 anchors.rightMargin:15
                 height: nameLabel.height + 8
 
@@ -64,7 +66,7 @@ Item{
                     width: parent.width
                     wrapMode: Text.Wrap
                     text:ctitle
-                    font.pointSize: 14
+                    font.pointSize: 15
                 }
             }
 
@@ -115,6 +117,7 @@ Item{
                 left: parent.left
                 right: submit.left
                 verticalCenter: submit.verticalCenter
+                margins: 10
                 }
             //width: parent.width - submit.width - 10
             placeholderText:"输入你要做的事"
@@ -157,15 +160,19 @@ Item{
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
             ST.removeCombo(todelete);
-            settingModel.remove(todeleteIndex)
+            settingModel.remove(todeleteIndex);
+
         }
-        onNo: console.log("didn't copy")
+        onNo: console.log("didn't delete")
         Component.onCompleted: visible = false
     }
 
     Component.onCompleted: {
         ST.initialize();
         ST.loadCombo(settingModel);
+    }
+    Component.onDestruction: {
+        ST.loadCombo(cbItems);
     }
 }
 

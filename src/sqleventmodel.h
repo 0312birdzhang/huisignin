@@ -60,6 +60,8 @@ public:
 
     Q_INVOKABLE bool deleteData(const QString &name,const QDate &date);
 
+    Q_INVOKABLE bool isChecked(const QString &name,const QDate& date);
+
 private:
     static void createConnection();
 };
