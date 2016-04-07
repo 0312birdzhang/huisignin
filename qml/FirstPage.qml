@@ -363,7 +363,7 @@ Item {
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: checked.left
-                        height: timeLabel.height + nameLabel.height + 8
+                        height: timeLabel.height + nameLabel.height + 12
 
                         Label {
                             id: nameLabel
@@ -377,6 +377,7 @@ Item {
                             wrapMode: Text.Wrap
                             text: modelData.startDate.toLocaleTimeString(calendar.locale, Locale.ShortFormat)
                             color: "#aaa"
+                            font.pointSize: 12
                         }
                     }
 
@@ -462,14 +463,13 @@ Item {
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: tochecked.left
-                        height: comboLabel.height + timecomboLabel.height + 10
+                        height: comboLabel.height + timecomboLabel.height + 12
 
                         Label {
                             id: comboLabel
                             width: parent.width
                             wrapMode: Text.Wrap
                             text: ctitle
-                            font.pointSize: 15
                         }
                         Label {
                             id: timecomboLabel
