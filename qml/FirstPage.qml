@@ -249,7 +249,7 @@ Item {
                     refreshEvent();
                 }
             }
-            onNo: console.log("didn't delete")
+            onNo: console.log("didn't delete");
             Component.onCompleted: visible = false
 
         }
@@ -441,9 +441,9 @@ Item {
                         id:tochecked
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        width: parent.height - 3
+                        width: parent.height / 2
                         height: width
-                        source: eventModel.isChecked(ctitle)?"qrc:/images/checked.png":"qrc:/images/unchecked.png"
+                        source: eventModel.isChecked(ctitle,calendar.selectedDate)?"qrc:/images/checked.png":"qrc:/images/unchecked.png"
                     }
 
                     Rectangle {
@@ -462,7 +462,7 @@ Item {
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: tochecked.left
-                        height: comboLabel.height + 10
+                        height: comboLabel.height + timecomboLabel.height + 10
 
                         Label {
                             id: comboLabel
@@ -471,14 +471,27 @@ Item {
                             text: ctitle
                             font.pointSize: 15
                         }
+                        Label {
+                            id: timecomboLabel
+                            width: parent.width
+                            wrapMode: Text.Wrap
+                            text: ""
+                            color: "#aaa"
+                        }
                     }
 
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            var flag = eventModel.insertData(ctitle,calendar.selectedDate,getCurrentTime());
-                            if(flag){
-                                tochecked.source = "qrc:/images/checked.png";
+                            if(eventModel.isChecked(ctitle,calendar.selectedDate)){
+                                eventModel.deleteData(ctitle,calendar.selectedDate);
+                                tochecked.source = "qrc:/images/unchecked.png";
+                            }else{
+
+                                var flag = eventModel.insertData(ctitle,calendar.selectedDate,getCurrentTime());
+                                if(flag){
+                                    tochecked.source = "qrc:/images/checked.png";
+                                }
                             }
                         }
                     }
