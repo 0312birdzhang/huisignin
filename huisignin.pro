@@ -10,7 +10,17 @@ OTHER_FILES += qml/main.qml
 
 RESOURCES += resources.qrc
 
-DISTFILES += \
+ios: {
+    QMAKE_INFO_PLIST = $$PWD/huisignin-Info.plist
+    QTPLUGIN +=  qsvg
+    OTHER_FILES += huisignin-Info.plist
+    icons.files += android/res/drawable-hdpi/icon.png
+    QMAKE_BUNDLE_DATA += icons
+}
+
+android: {
+
+    DISTFILES += \
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
@@ -18,6 +28,9 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew.bat \
+}
+
+DISTFILES += \
     qml/getrandomTip.js \
     qml/settingPage.qml \
     qml/FirstPage.qml \
