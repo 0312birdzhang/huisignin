@@ -45,17 +45,17 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 //import Qt.labs.controls 1.0
-import com.birdzhang.huisignin.eventmodel 1.0
 
 import "./getrandomTip.js" as TIP
+import "./storage.js" as ST
 
 ApplicationWindow {
     id:appwindow
     visible: true
-    width: isMobile() ? Screen.width : 1900
-    height: isMobile() ? Screen.height : 1000
-    minimumWidth: 400
-    minimumHeight: 300
+    width: isMobile() ? Screen.width : 1000
+    height: isMobile() ? Screen.height : 1900
+    minimumWidth: 350
+    minimumHeight: 500
     color: "#f4f4f4"
 
     title: "卉打卡"
@@ -98,6 +98,7 @@ ApplicationWindow {
 
 
     function isMobile() {
+        console.log(Qt.platform.os)
          var b = false
          switch(Qt.platform.os) {
          case "ios":
@@ -116,4 +117,7 @@ ApplicationWindow {
           id: cbItems
        }
 
+    Component.onCompleted: {
+        ST.initialize();
+    }
 }

@@ -5,7 +5,7 @@
         <key>CFBundleDevelopmentRegion</key>
         <string>cn</string>
         <key>CFBundleDisplayName</key>
-        <string>${PRODUCT_NAME}</string>
+        <string>卉打卡</string>
         <key>CFBundleExecutable</key>
         <string>${EXECUTABLE_NAME}</string>
         <key>CFBundleIcons</key>
@@ -36,13 +36,6 @@
         <true/>
         <key>UIStatusBarHidden</key>
         <true/>
-        <key>UISupportedInterfaceOrientations</key>
-        <array>
-                <string>UIInterfaceOrientationLandscapeRight</string>
-        </array>
-        <key>UISupportedInterfaceOrientations~ipad</key>
-        <array>
-                <string>UIInterfaceOrientationPortrait</string>
-        </array>
+
 </dict>
 </plist>

@@ -1,8 +1,6 @@
 QT += qml quick sql
 TARGET = huisignin
 
-!contains(sql-drivers, sqlite): QTPLUGIN += qsqlite
-
 include(src/src.pri)
 include(shared/shared.pri)
 
@@ -20,6 +18,11 @@ android:{
         android/build.gradle \
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew.bat \
+    deployment.files += signin.sqlite
+    deployment.path = /assets
+    INSTALLS += deployment
+
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 }
 
@@ -36,10 +39,9 @@ DISTFILES += \
     qml/getrandomTip.js \
     qml/settingPage.qml \
     qml/FirstPage.qml \
-    qml/storage.js
+    qml/storage.js \
+    qml/SwipeArea.qml
 
-deployment.files += signin.sqlite
-deployment.path = /assets
-INSTALLS += deployment
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+

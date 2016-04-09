@@ -1,9 +1,6 @@
 SOURCES += \
-    $$PWD/event.cpp \
-    $$PWD/main.cpp \
-    $$PWD/sqleventmodel.cpp
+    $$PWD/main.cpp
 
 
 HEADERS += \
-    $$PWD/event.h \
-    $$PWD/sqleventmodel.h
+    $$PWD/event.h

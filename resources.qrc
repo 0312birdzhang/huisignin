@@ -12,5 +12,6 @@
         <file>qml/FirstPage.qml</file>
         <file>qml/storage.js</file>
         <file>images/unchecked.png</file>
+        <file>qml/SwipeArea.qml</file>
     </qresource>
 </RCC>
