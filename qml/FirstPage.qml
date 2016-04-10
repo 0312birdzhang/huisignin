@@ -471,13 +471,11 @@ Item {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            console.log(ST.isChecked(ctitle,calendar.selectedDate))
                             if(ST.isChecked(ctitle,calendar.selectedDate)){
                                 ST.deleteData(ctitle,calendar.selectedDate);
                                 tochecked.source = "qrc:/images/unchecked.png";
                             }else{
-                                console.log(new Date().toLocaleDateString())
-                                var flag = ST.insertData(ctitle,calendar.selectedDate,new Date().toLocaleDateString(calendar.locale, Locale.ShortFormat));
+                                var flag = ST.insertData(ctitle,calendar.selectedDate,new Date().toLocaleTimeString(Qt.locale, Locale.ShortFormat));
                                 if(flag){
                                     tochecked.source = "qrc:/images/checked.png";
                                 }

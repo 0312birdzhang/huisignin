@@ -97,6 +97,10 @@ Item{
                 id: eventDayLabel
                 text: "设置打卡内容"
                 font.pointSize: 20
+                MouseArea{
+                    anchors.fill: parent
+                    onDoubleClicked: pageStack.pop();
+                }
             }
 
         }
@@ -174,6 +178,25 @@ Item{
     Component.onDestruction: {
         ST.loadCombo(cbItems);
     }
+
+    SwipeArea {
+            id: mouse
+            anchors.fill: parent
+
+            onSwipe: {
+
+                switch (direction) {
+                case "left":
+
+                    break
+                case "right":
+                    ST.loadCombo(cbItems);
+                    pageStack.pop();
+                    break
+                }
+            }
+
+        }
 }
 
 
