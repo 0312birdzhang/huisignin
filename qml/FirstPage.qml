@@ -54,7 +54,9 @@ Item {
     property date selectedDate: calendar.selectedDate
     property string currentSelectname
     property alias  eventsmodel: eventsModel
-
+    width: parent.width
+    height: parent.height
+    z: 100
     onSelectedDateChanged: {
         eventsList.visible = true;
         eventsListView.model = ST.eventsForDate(eventsModel,calendar.selectedDate);
@@ -319,13 +321,13 @@ Item {
                 id: eventsListView
                 spacing: 4
                 clip: true
-                //header: eventListHeader
+                width: parent.width
                 anchors.fill: parent
                 anchors.margins: 10
                 model: ST.eventsForDate(eventsModel,calendar.selectedDate)
 
                 delegate: Rectangle {
-                    width: eventsListView.width
+                    width: parent.width
                     height: eventItemColumn.height
                     anchors.horizontalCenter: parent.horizontalCenter
                     Image {
@@ -346,12 +348,12 @@ Item {
 
                     Column {
                         id: eventItemColumn
-                        anchors.top:checked.top
                         anchors.left: parent.left
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: checked.left
-                        height: timeLabel.height + nameLabel.height + 12
+                        width: parent.width
+                        spacing: 12
 
                         Label {
                             id: nameLabel

@@ -38,15 +38,17 @@
 **
 ****************************************************************************/
 
-#include <QtQml>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-#include "qtquickcontrolsapplication.h"
+#define TAG "hlsapp"
 
 int main(int argc, char *argv[])
 {
-    QtQuickControlsApplication app(argc, argv);
-    QQmlApplicationEngine engine(QUrl("qrc:/qml/main.qml"));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
     return app.exec();
 }

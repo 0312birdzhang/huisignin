@@ -9,10 +9,12 @@ import "./storage.js" as ST
 Item{
 
     id:settingPage
-    anchors.fill: parent
+    //anchors.fill: parent
     property string todelete
     property int todeleteIndex
-
+    width: parent.width
+    height: parent.height
+    z: 100
 
     ListModel{
         id:settingModel

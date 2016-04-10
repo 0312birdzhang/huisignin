@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.5.1, 2016-04-09T14:44:08. -->
+<!-- Written by QtCreator 3.5.1, 2016-04-10T21:16:05. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -450,7 +450,7 @@
     </valuemap>
     <valuelist type="QVariantList" key="Ios.run_arguments"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run on iPhone0.1</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run huisignin on iPhone0.1</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run  on iPhone0.1</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosRunConfiguration:/Users/bird/code/huisignin/huisignin.pro</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
@@ -656,7 +656,7 @@
     </valuemap>
     <valuelist type="QVariantList" key="Ios.run_arguments"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run on iOS Simulator</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run huisignin on iOS Simulator</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run  on iOS Simulator</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosRunConfiguration:/Users/bird/code/huisignin/huisignin.pro</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

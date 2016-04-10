@@ -2,7 +2,7 @@ QT += qml quick sql
 TARGET = huisignin
 
 include(src/src.pri)
-include(shared/shared.pri)
+include(deployment.pri)
 
 OTHER_FILES += qml/main.qml
 
@@ -32,7 +32,9 @@ ios: {
     OTHER_FILES += huisignin-Info.plist
 
     icons.files += android/res/drawable-hdpi/icon.png
-    QMAKE_BUNDLE_DATA += icons
+    app_launch_images.files = $$PWD/ios/LaunchScreen.storyboard $$files($$PWD/ios/LaunchScreen*.png)
+    QMAKE_BUNDLE_DATA += icons \
+                        app_launch_images
 }
 
 DISTFILES += \
