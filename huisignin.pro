@@ -33,6 +33,10 @@ ios: {
                         app_launch_images
 }
 
+windows: {
+    RC_FILE = icons.rc
+}
+
 DISTFILES += \
     qml/getrandomTip.js \
     qml/settingPage.qml \
