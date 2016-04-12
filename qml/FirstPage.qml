@@ -54,12 +54,16 @@ Item {
     property date selectedDate: calendar.selectedDate
     property string currentSelectname
     property alias  eventsmodel: eventsModel
+    property bool running:Qt.application.active
     width: parent.width
     height: parent.height
     z: 100
     onSelectedDateChanged: {
         eventsList.visible = true;
         eventsListView.model = ST.eventsForDate(eventsModel,calendar.selectedDate);
+    }
+    onRunningChanged: {
+        refreshEvent();
     }
 
     SystemPalette {
@@ -507,4 +511,6 @@ Item {
         ST.initialize();
         ST.loadCombo(cbItems);
     }
+
+
 }

@@ -131,8 +131,8 @@ Item{
 
         Image {
             id: submit
-            source: "qrc:/images/yes.png"
-            anchors.right: parent.right
+            source: "qrc:/images/yes.png";
+            anchors.right: parent.right;
             width: parent.height * 0.7
             height: width
             MouseArea{
