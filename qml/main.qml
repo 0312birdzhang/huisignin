@@ -51,8 +51,8 @@ import "./storage.js" as ST
 Window {
     id:appwindow
     visible: true
-    width: isMobile() ? Screen.width : 480
-    height: isMobile() ? Screen.height : 800
+    width: isMobile() ? Screen.width : 800
+    height: isMobile() ? Screen.height : 480
 
     minimumWidth: 350
     minimumHeight: 500

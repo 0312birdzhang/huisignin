@@ -393,6 +393,7 @@ Item {
             Label{
                 id:fridenlyNotify
                 anchors.fill: parent
+                anchors.margins: 15
                 font.pointSize: 15
                 color: "#aaa"
                 width: parent.width
@@ -496,6 +497,7 @@ Item {
             Label{
                 id:settNotify
                 anchors.fill: parent
+                anchors.margins: 15
                 font.pointSize: 15
                 color: "#aaa"
                 width: parent.width
