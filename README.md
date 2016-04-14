@@ -1,8 +1,6 @@
-#huisignin
-
 #卉打卡
 
-一款简单的签到打卡软件，截图
+一款简单的签到打卡软件，基于Qt5.6编写，支持windows、Android、Ios、Ubuntu等，软件部分图标来源于网络，软件截图如下
 
 ![](http://ww1.sinaimg.cn/mw690/77687413gw1f2jzk3q5twj20f00qoq4k.jpg)
 
