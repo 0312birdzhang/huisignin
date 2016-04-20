@@ -9,10 +9,12 @@ import "./storage.js" as ST
 Item{
 
     id:settingPage
-    anchors.fill: parent
+    //anchors.fill: parent
     property string todelete
     property int todeleteIndex
-
+    width: parent.width
+    height: parent.height
+    z: 100
 
     ListModel{
         id:settingModel
@@ -97,6 +99,10 @@ Item{
                 id: eventDayLabel
                 text: "设置打卡内容"
                 font.pointSize: 20
+                MouseArea{
+                    anchors.fill: parent
+                    onDoubleClicked: pageStack.pop();
+                }
             }
 
         }
@@ -125,8 +131,8 @@ Item{
 
         Image {
             id: submit
-            source: "qrc:/images/yes.png"
-            anchors.right: parent.right
+            source: "qrc:/images/yes.png";
+            anchors.right: parent.right;
             width: parent.height * 0.7
             height: width
             MouseArea{
@@ -174,6 +180,25 @@ Item{
     Component.onDestruction: {
         ST.loadCombo(cbItems);
     }
+
+    SwipeArea {
+            id: mouse
+            anchors.fill: parent
+
+            onSwipe: {
+
+                switch (direction) {
+                case "left":
+
+                    break
+                case "right":
+                    ST.loadCombo(cbItems);
+                    pageStack.pop();
+                    break
+                }
+            }
+
+        }
 }
 
 

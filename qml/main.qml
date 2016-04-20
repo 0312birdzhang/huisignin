@@ -38,24 +38,24 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Private 1.0
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Window 2.0
+import QtQuick 2.5
+import QtQuick.Window 2.2
+import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.1
 //import Qt.labs.controls 1.0
-import com.birdzhang.huisignin.eventmodel 1.0
 
 import "./getrandomTip.js" as TIP
+import "./storage.js" as ST
 
-ApplicationWindow {
+Window {
     id:appwindow
     visible: true
-    width: isMobile() ? Screen.width : 1900
-    height: isMobile() ? Screen.height : 1000
-    minimumWidth: 400
-    minimumHeight: 300
+    width: isMobile() ? Screen.width : 800
+    height: isMobile() ? Screen.height : 480
+
+    minimumWidth: 350
+    minimumHeight: 500
     color: "#f4f4f4"
 
     title: "卉打卡"
@@ -92,12 +92,16 @@ ApplicationWindow {
 
     StackView{
         id:pageStack
+        z: 101
+        width: parent.width
+        height: parent.height
         initialItem:Qt.resolvedUrl("FirstPage.qml")
         anchors.fill: parent
     }
 
 
     function isMobile() {
+        console.log(Qt.platform.os)
          var b = false
          switch(Qt.platform.os) {
          case "ios":
@@ -116,4 +120,7 @@ ApplicationWindow {
           id: cbItems
        }
 
+    Component.onCompleted: {
+        ST.initialize();
+    }
 }

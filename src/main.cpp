@@ -38,17 +38,17 @@
 **
 ****************************************************************************/
 
-#include <QtQml>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-#include "qtquickcontrolsapplication.h"
-#include "sqleventmodel.h"
+#define TAG "hlsapp"
 
 int main(int argc, char *argv[])
 {
-    QtQuickControlsApplication app(argc, argv);
-    qmlRegisterType<SqlEventModel>("com.birdzhang.huisignin.eventmodel", 1, 0, "SqlEventModel");
-    QQmlApplicationEngine engine(QUrl("qrc:/qml/main.qml"));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
     return app.exec();
 }

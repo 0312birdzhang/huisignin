@@ -45,7 +45,6 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 //import Qt.labs.controls 1.0
-import com.birdzhang.huisignin.eventmodel 1.0
 
 import "./getrandomTip.js" as TIP
 import "./storage.js" as ST
@@ -54,20 +53,25 @@ Item {
     id:fristpage
     property date selectedDate: calendar.selectedDate
     property string currentSelectname
-
+    property alias  eventsmodel: eventsModel
+    property bool running:Qt.application.active
+    width: parent.width
+    height: parent.height
+    z: 100
     onSelectedDateChanged: {
         eventsList.visible = true;
-        eventsListView.model = eventModel.eventsForDate(calendar.selectedDate);
-        //console.log("selectedDateChanged!");
-
+        eventsListView.model = ST.eventsForDate(eventsModel,calendar.selectedDate);
+    }
+    onRunningChanged: {
+        refreshEvent();
     }
 
     SystemPalette {
         id: systemPalette
     }
 
-    SqlEventModel {
-        id: eventModel
+    ListModel {
+        id: eventsModel
     }
 
     ListModel{
@@ -78,9 +82,10 @@ Item {
         var date = new Date();
         var zero = new Date(date.getFullYear(),date.getMonth(),date.getDate(),0)
         var cha = (date.getTime() - zero.getTime())/1000;
-        //console.log("cha:"+cha);
         return cha;
     }
+
+
 
     function isSameday(){
         var date = calendar.selectedDate;
@@ -96,7 +101,7 @@ Item {
         calendar.selectedDate = getNextMonthDay();
         calendar.selectedDate = new Date();
         eventsListView.model = tmpModel;
-        eventsListView.model = eventModel.eventsForDate(calendar.selectedDate);
+        eventsListView.model = ST.eventsForDate(eventsModel,calendar.selectedDate);
     }
 
 
@@ -115,18 +120,7 @@ Item {
         return new Date(year,month,1,0)
     }
 
-    function isMobile() {
-         var b = false
-         switch(Qt.platform.os) {
-         case "ios":
-             b = true
-             break
-         case "android":
-             b = true
-             break
-         }
-         return b
-     }
+
 
     Flow {
         id: row
@@ -163,7 +157,7 @@ Item {
                     }
 
                     Image {
-                        visible: eventModel.eventsForDate(styleData.date).length > 0
+                        visible: ST.hasfeature(styleData.date)
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.margins: -1
@@ -243,7 +237,7 @@ Item {
             standardButtons: StandardButton.Yes | StandardButton.No
             onYes: {
                 console.log(currentSelectname)
-                var flag = eventModel.deleteData(currentSelectname,calendar.selectedDate);
+                var flag = ST.deleteData(currentSelectname,calendar.selectedDate);
                 if(flag){
                     ST.loadCombo(cbItems);
                     refreshEvent();
@@ -278,7 +272,7 @@ Item {
                 source: "qrc:/images/setting.png"
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: pageStack.push(Qt.resolvedUrl("settingPage.qml"))
+                    onClicked: pageStack.push(Qt.resolvedUrl("settingPage.qml"),false)
                 }
             }
 
@@ -331,13 +325,13 @@ Item {
                 id: eventsListView
                 spacing: 4
                 clip: true
-                //header: eventListHeader
+                width: parent.width
                 anchors.fill: parent
                 anchors.margins: 10
-                model: eventModel.eventsForDate(calendar.selectedDate)
+                model: ST.eventsForDate(eventsModel,calendar.selectedDate)
 
                 delegate: Rectangle {
-                    width: eventsListView.width
+                    width: parent.width
                     height: eventItemColumn.height
                     anchors.horizontalCenter: parent.horizontalCenter
                     Image {
@@ -358,24 +352,24 @@ Item {
 
                     Column {
                         id: eventItemColumn
-                        anchors.top:checked.top
                         anchors.left: parent.left
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: checked.left
-                        height: timeLabel.height + nameLabel.height + 12
+                        width: parent.width
+                        spacing: 12
 
                         Label {
                             id: nameLabel
                             width: parent.width
                             wrapMode: Text.Wrap
-                            text: modelData.name
+                            text: name
                         }
                         Label {
                             id: timeLabel
                             width: parent.width
                             wrapMode: Text.Wrap
-                            text: modelData.startDate.toLocaleTimeString(calendar.locale, Locale.ShortFormat)
+                            text: startTime
                             color: "#aaa"
                             font.pointSize: 12
                         }
@@ -385,7 +379,7 @@ Item {
                         anchors.fill: parent
                         onPressAndHold: {
                             //本天的可以删除，其他不能
-                            currentSelectname = modelData.name;
+                            currentSelectname = name;
                             if(isSameday()){
                                 confirmDialog.open();
                             }
@@ -399,12 +393,13 @@ Item {
             Label{
                 id:fridenlyNotify
                 anchors.fill: parent
+                anchors.margins: 15
                 font.pointSize: 15
                 color: "#aaa"
                 width: parent.width
                 font.letterSpacing: 1;
                 wrapMode: Text.Wrap
-                visible: eventsListView.model.length < 1
+                visible: eventsListView.model.count < 1
                 text:{
                     if(calendar.selectedDate > new Date()){
                         var f_len = TIP.futureDay.length;
@@ -444,7 +439,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         width: parent.height / 2
                         height: width
-                        source: eventModel.isChecked(ctitle,calendar.selectedDate)?"qrc:/images/checked.png":"qrc:/images/unchecked.png"
+                        source: ST.isChecked(ctitle,calendar.selectedDate)?"qrc:/images/checked.png":"qrc:/images/unchecked.png"
                     }
 
                     Rectangle {
@@ -483,12 +478,11 @@ Item {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            if(eventModel.isChecked(ctitle,calendar.selectedDate)){
-                                eventModel.deleteData(ctitle,calendar.selectedDate);
+                            if(ST.isChecked(ctitle,calendar.selectedDate)){
+                                ST.deleteData(ctitle,calendar.selectedDate);
                                 tochecked.source = "qrc:/images/unchecked.png";
                             }else{
-
-                                var flag = eventModel.insertData(ctitle,calendar.selectedDate,getCurrentTime());
+                                var flag = ST.insertData(ctitle,calendar.selectedDate,new Date().toLocaleTimeString(Qt.locale, Locale.ShortFormat));
                                 if(flag){
                                     tochecked.source = "qrc:/images/checked.png";
                                 }
@@ -503,6 +497,7 @@ Item {
             Label{
                 id:settNotify
                 anchors.fill: parent
+                anchors.margins: 15
                 font.pointSize: 15
                 color: "#aaa"
                 width: parent.width
@@ -518,4 +513,6 @@ Item {
         ST.initialize();
         ST.loadCombo(cbItems);
     }
+
+
 }
