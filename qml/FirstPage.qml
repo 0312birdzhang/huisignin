@@ -64,6 +64,7 @@ Item {
     }
     onRunningChanged: {
         refreshEvent();
+        ST.loadCombo(cbItems);
     }
 
     SystemPalette {
