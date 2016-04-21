@@ -5,6 +5,7 @@
 本软件开源免费，同时会支持windows、ios、android、mac os x，如果你是一个想学Qt的童鞋，可以参考一下
 截图如下：
 
+
 ![](http://ww1.sinaimg.cn/mw690/77687413gw1f2jzk3q5twj20f00qoq4k.jpg)
 
 ![](http://ww4.sinaimg.cn/mw690/77687413gw1f2jzk5b207j20f00qot9c.jpg)

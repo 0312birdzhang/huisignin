@@ -8,6 +8,7 @@ OTHER_FILES += qml/main.qml
 
 RESOURCES += resources.qrc
 
+
 android: {
     DISTFILES += \
         android/AndroidManifest.xml \
@@ -22,6 +23,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 }
 
+
 ios: {
     QMAKE_INFO_PLIST = $$PWD/huisignin-Info.plist
     QTPLUGIN +=  qsvg
@@ -35,6 +37,24 @@ ios: {
 
 windows: {
     RC_FILE = icons.rc
+}
+
+android: {
+
+    DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
+    
+    deployment.files += signin.sqlite
+    deployment.path = /assets
+    INSTALLS += deployment
+
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
 
 DISTFILES += \
