@@ -19,7 +19,7 @@ android: {
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew.bat
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+        ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 }
 
@@ -39,23 +39,6 @@ windows: {
     RC_FILE = icons.rc
 }
 
-android: {
-
-    DISTFILES += \
-    android/AndroidManifest.xml \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
-    android/res/values/libs.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
-    
-    deployment.files += signin.sqlite
-    deployment.path = /assets
-    INSTALLS += deployment
-
-    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-}
 
 DISTFILES += \
     qml/getrandomTip.js \
