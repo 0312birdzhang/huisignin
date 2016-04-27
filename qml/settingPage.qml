@@ -141,13 +141,18 @@ Item{
                     //console.log(toadded.text);
                     msa.focus = true;
                     if(toadded.text){
-                        ST.addCombo(Qt.md5(toadded.text),toadded.text);
-                        settingModel.insert(0,{
-                                             "cname":Qt.md5(toadded.text),
-                                             "ctitle":toadded.text
-                                            })
+                        //判断是否已经存在
+                        if(ST.isExist(Qt.md5(toadded.text))){
+                            tips.open();
+                        }else{
 
-                        toadded.text = "";
+                            ST.addCombo(Qt.md5(toadded.text),toadded.text);
+                            settingModel.insert(0,{
+                                                 "cname":Qt.md5(toadded.text),
+                                                 "ctitle":toadded.text
+                                                });
+                            toadded.text = "";
+                        }
                       }
 
                 }
@@ -170,6 +175,15 @@ Item{
 
         }
         onNo: console.log("didn't delete")
+        Component.onCompleted: visible = false
+    }
+
+    MessageDialog {
+        id:tips
+        title: "提示"
+        text: "已存在相同的事件"
+        icon:StandardIcon.Information
+        standardButtons: StandardButton.Ok
         Component.onCompleted: visible = false
     }
 
