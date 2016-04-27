@@ -1,8 +1,11 @@
 QT += qml quick sql
 TARGET = huisignin
 
+OPTIONS += roboto
+
 include(src/src.pri)
 include(deployment.pri)
+include(material/material.pri)
 
 OTHER_FILES += qml/main.qml
 
