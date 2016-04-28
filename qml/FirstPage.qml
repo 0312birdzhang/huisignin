@@ -123,12 +123,16 @@ Item {
 
 
 
+
     Flow {
         id: row
         anchors.fill: parent
         anchors.margins: 20
         spacing: 10
         layoutDirection: Qt.LeftToRight
+
+
+
 
         Calendar {
             id: calendar
@@ -345,10 +349,10 @@ Item {
                     }
 
                     Rectangle {
+                        color: "#f0f0f4"
+                        height: eventItemColumn.height
                         width: parent.width
-                        height: 1
-                        color: "#eee"
-                        visible: index > 0
+                        opacity: index%2 === 0 ? 0.5 : 0
                     }
 
                     Column {
@@ -358,7 +362,7 @@ Item {
                         anchors.rightMargin:15
                         anchors.right: checked.left
                         width: parent.width
-                        spacing: 12
+                        spacing: 10
 
                         Label {
                             id: nameLabel
@@ -372,7 +376,7 @@ Item {
                             wrapMode: Text.Wrap
                             text: startTime
                             color: "#aaa"
-                            font.pointSize: 12
+                            font.pointSize: 10
                         }
                     }
 
@@ -444,12 +448,10 @@ Item {
                     }
 
                     Rectangle {
+                        color: "#f0f0f4"
+                        height: comboItemColumn.height
                         width: parent.width
-                        height: 1
-                        color: "#eee"
-                        visible: index > 0
-                        anchors.top:comboItemColumn.top
-                        anchors.topMargin: -8
+                        opacity: index%2 === 0 ? 0.5 : 0
                     }
 
                     Column {

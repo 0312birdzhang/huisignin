@@ -46,13 +46,21 @@ Item{
             height: eventItemColumn.height
             anchors.horizontalCenter: parent.horizontalCenter
 
+//            Rectangle {
+//                width: parent.width
+//                height: 1
+//                color: "#eee"
+//                visible: index > 0
+//                anchors.top:eventItemColumn.top
+//                anchors.topMargin: -8
+//            }
+
             Rectangle {
-                width: parent.width
-                height: 1
+                z: -1
                 color: "#eee"
-                visible: index > 0
-                anchors.top:eventItemColumn.top
-                anchors.topMargin: -8
+                height: eventItemColumn.height
+                width: parent.width
+                opacity: index%2 === 0 ? 0.5 : 0
             }
 
             Column {
@@ -67,7 +75,7 @@ Item{
                     id: nameLabel
                     width: parent.width
                     wrapMode: Text.Wrap
-                    text:ctitle
+                    text:(index+1) +"." + ctitle
                     font.pointSize: 15
                 }
             }
@@ -181,7 +189,7 @@ Item{
     MessageDialog {
         id:tips
         title: "提示"
-        text: "已存在相同的事件"
+        text: "已存在相同的打卡内容"
         icon:StandardIcon.Information
         standardButtons: StandardButton.Ok
         Component.onCompleted: visible = false

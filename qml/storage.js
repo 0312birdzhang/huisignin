@@ -40,7 +40,7 @@ function isExist(cname){
     var flag = false;
     var db = getDatabase();
     db.readTransaction(function(tx){
-                           var rs = tx.executeSql('select * from combo where cname = ;',[cname])
+                           var rs = tx.executeSql('select * from combo where cname = ?;',[cname])
                             if(rs.rows.length>0){
                                 flag = true;
                             }
@@ -52,7 +52,7 @@ function isExist(cname){
 function removeCombo(cname){
     var db = getDatabase();
     db.transaction(function(tx){
-                       tx.executeSql('DELETE FROM combo WHERE cname=?;',[cname])
+                       tx.executeSql('DELETE FROM combo WHERE cname= ?;',[cname])
                    })
 }
 
