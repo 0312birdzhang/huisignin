@@ -36,6 +36,19 @@ function loadCombo(model){
                        })
 }
 
+function isExist(cname){
+    var flag = false;
+    var db = getDatabase();
+    db.readTransaction(function(tx){
+                           var rs = tx.executeSql('select * from combo where cname = ;',[cname])
+                            if(rs.rows.length>0){
+                                flag = true;
+                            }
+                       });
+    return flag;
+}
+
+
 function removeCombo(cname){
     var db = getDatabase();
     db.transaction(function(tx){
