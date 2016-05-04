@@ -2,9 +2,11 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Private 1.0
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Layouts 1.1
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 import "./storage.js" as ST
+import Material 0.3
 
 Item{
 
@@ -37,6 +39,24 @@ Item{
             bottom:listFotter.top
         }
 
+        SwipeArea {
+                id: mouse
+                anchors.fill: parent
+
+                onSwipe: {
+
+                    switch (direction) {
+                    case "left":
+
+                        break
+                    case "right":
+                        ST.loadCombo(cbItems);
+                        pageStack.pop();
+                        break
+                    }
+                }
+
+            }
         anchors.margins: 10
         model: settingModel
 
@@ -97,8 +117,10 @@ Item{
 
             Label {
                 id: eventDayLabel
+                font.family: "Roboto"
+                font.weight: Font.DemiBold
+                font.pixelSize: 20
                 text: "设置打卡内容"
-                font.pointSize: 20
                 MouseArea{
                     anchors.fill: parent
                     onDoubleClicked: pageStack.pop();
@@ -119,13 +141,14 @@ Item{
         }
         TextField{
             id:toadded
+            characterLimit: 10
+            floatingLabel: true
             anchors{
                 left: parent.left
                 right: submit.left
                 verticalCenter: submit.verticalCenter
                 margins: 10
                 }
-            //width: parent.width - submit.width - 10
             placeholderText:"输入你要做的事"
         }
 
@@ -181,24 +204,7 @@ Item{
         ST.loadCombo(cbItems);
     }
 
-    SwipeArea {
-            id: mouse
-            anchors.fill: parent
 
-            onSwipe: {
-
-                switch (direction) {
-                case "left":
-
-                    break
-                case "right":
-                    ST.loadCombo(cbItems);
-                    pageStack.pop();
-                    break
-                }
-            }
-
-        }
 }
 
 

@@ -45,7 +45,7 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 //import Qt.labs.controls 1.0
-
+import Material 0.2
 import "./getrandomTip.js" as TIP
 import "./storage.js" as ST
 
@@ -459,6 +459,7 @@ Item {
                         anchors.leftMargin: 8
                         anchors.rightMargin:15
                         anchors.right: tochecked.left
+                        width: parent.width
                         height: comboLabel.height + timecomboLabel.height + 12
 
                         Label {
