@@ -130,7 +130,7 @@ Item {
         spacing: 10
         layoutDirection: Qt.LeftToRight
 
-        Calendar {
+        DatePicker {
             id: calendar
             width: (parent.width > parent.height ? parent.width * 0.6 - parent.spacing : parent.width)
             height: (parent.height > parent.width ? parent.height * 0.6 - parent.spacing : parent.height)
@@ -142,7 +142,16 @@ Item {
 
 
             style: CalendarStyle {
+                gridVisible: false
+
+//                background: Rectangle {
+//                    color: "white"
+//                    implicitWidth: calendarWidth
+//                    implicitHeight: calendarHeight
+//                }
+
                 dayDelegate: Item {
+                    visible: styleData.visibleMonth
                     readonly property color sameMonthDateTextColor: "#444"
                     readonly property color selectedDateColor: Qt.platform.os === "osx" ? "#3778d0" : systemPalette.highlight
                     readonly property color selectedDateTextColor: "white"
@@ -150,32 +159,58 @@ Item {
                     readonly property color invalidDatecolor: "#dddddd"
 
 
+//                    Rectangle {
+//                        anchors.fill: parent
+//                        border.color: "transparent"
+//                        color: styleData.date !== undefined && styleData.selected ? selectedDateColor : "transparent"
+//                        anchors.margins: styleData.selected ? -1 : 0
+//                    }
                     Rectangle {
-                        anchors.fill: parent
-                        border.color: "transparent"
-                        color: styleData.date !== undefined && styleData.selected ? selectedDateColor : "transparent"
-                        anchors.margins: styleData.selected ? -1 : 0
+                        anchors.centerIn: parent
+                        width: 0.75 * Math.min(parent.width, parent.height)
+                        height: width
+
+                        color: styleData.selected ? Theme.accentColor : "transparent"
+                        radius: height/2
                     }
 
-                    Image {
+                    Rectangle {
                         visible: ST.hasfeature(styleData.date)
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.margins: -1
-                        width: parent.width / 4
+                        anchors.centerIn: parent
+                        width: 0.75 * Math.min(parent.width, parent.height)
                         height: width
-                        source: "qrc:/images/eventindicator.png"
+                        color: styleData.selected ? "#FF8A80" : "#D1C4E9"
+                        radius: height/2
                     }
 
-                    Image {
+                    Rectangle {
                         visible: styleData.date.toDateString() == new Date().toDateString()
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.margins: -1
-                        width: parent.width / 4
+                        anchors.centerIn: parent
+                        width: 0.75 * Math.min(parent.width, parent.height)
                         height: width
-                        source: "qrc:/images/today.png"
+
+                        color: styleData.selected ?  "orange":"#90CAF9"
+                        radius: height/2
                     }
+//                    Image {
+//                        visible: ST.hasfeature(styleData.date)
+//                        anchors.top: parent.top
+//                        anchors.left: parent.left
+//                        anchors.margins: -1
+//                        width: parent.width / 4
+//                        height: width
+//                        source: "qrc:/images/eventindicator.png"
+//                    }
+
+//                    Image {
+//                        visible: styleData.date.toDateString() == new Date().toDateString()
+//                        anchors.top: parent.top
+//                        anchors.right: parent.right
+//                        anchors.margins: -1
+//                        width: parent.width / 4
+//                        height: width
+//                        source: "qrc:/images/today.png"
+//                    }
 
                     Label {
                         id: dayDelegateText
@@ -264,40 +299,79 @@ Item {
                 }
             }
 
-            Image{
+//            Image{
+//                id:settings
+//                width: addEvent.width
+//                height: width
+//                anchors.left:parent.left
+//                anchors.bottom: parent.bottom
+//                source: "qrc:/images/setting.png"
+//                MouseArea{
+//                    anchors.fill: parent
+//                    onClicked: pageStack.push(Qt.resolvedUrl("settingPage.qml"),false)
+//                }
+//            }
+
+            ActionButton {
                 id:settings
-                width: addEvent.width
-                height: width
-                anchors.left:parent.left
-                anchors.bottom: parent.bottom
-                source: "qrc:/images/setting.png"
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: pageStack.push(Qt.resolvedUrl("settingPage.qml"),false)
+                anchors {
+                    left:parent.left
+                    bottom: parent.bottom
                 }
+
+                action: Action {
+                    text: "Settings"
+                    //shortcut: "Ctrl+C"
+                    onTriggered: pageStack.push(Qt.resolvedUrl("settingPage.qml"),false)
+                }
+                iconName: "action/settings"
             }
 
-            Image{
+            ActionButton {
                 id:addEvent
                 visible: calendar.selectedDate.toDateString() == new Date().toDateString()
-                source: eventsList.visible?"qrc:/images/add.png":"qrc:/images/yes.png"
-                anchors.right: parent.right
-                width: (parent.width > parent.height ? parent.height:parent.width)
-                height: width
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: {
+                anchors {
+                    right: parent.right
+                    //margins: dp(20)
+                }
+
+                action: Action {
+                    id: addContent
+                    text: "Add"
+                    //shortcut: "Ctrl+C"
+                    onTriggered: {
                         if(!eventsList.visible){
                             eventsList.visible = true;
                             refreshEvent();
                         }else{
                             eventsList.visible = false;
                         }
-
-
                     }
                 }
+                iconName: "content/add"
             }
+
+//            Image{
+//                id:addEvent
+//                visible: calendar.selectedDate.toDateString() == new Date().toDateString()
+//                source: eventsList.visible?"qrc:/images/add.png":"qrc:/images/yes.png"
+//                anchors.right: parent.right
+//                width: (parent.width > parent.height ? parent.height:parent.width)
+//                height: width
+//                MouseArea{
+//                    anchors.fill: parent
+//                    onClicked: {
+//                        if(!eventsList.visible){
+//                            eventsList.visible = true;
+//                            refreshEvent();
+//                        }else{
+//                            eventsList.visible = false;
+//                        }
+
+
+//                    }
+//                }
+//            }
             Image{
                 id:back
                 visible: !addEvent.visible
@@ -428,10 +502,12 @@ Item {
                 clip: true
                 anchors.fill: parent
                 anchors.margins: 10
+                width: parent.width
                 model: cbItems
 
                 delegate: Rectangle {
-                    width: comboListView.width
+
+                    width: parent.width
                     height: comboItemColumn.height
                     anchors.horizontalCenter: parent.horizontalCenter
                     Image {
@@ -456,11 +532,11 @@ Item {
                         id: comboItemColumn
                         anchors.top:tochecked.top
                         anchors.left: parent.left
-                        anchors.leftMargin: 8
+                        anchors.leftMargin: 15
                         anchors.rightMargin:15
                         anchors.right: tochecked.left
                         width: parent.width
-                        height: comboLabel.height + timecomboLabel.height + 12
+                        height: comboLabel.height + timecomboLabel.height + dp(12)
 
                         Label {
                             id: comboLabel
@@ -510,6 +586,12 @@ Item {
             }
         }
     }
+
+
+
+//    Snackbar {
+//        id: snackbar
+//    }
 
     Component.onCompleted: {
         ST.initialize();

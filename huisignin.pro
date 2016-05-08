@@ -6,7 +6,7 @@ include(deployment.pri)
 
 OTHER_FILES += qml/main.qml
 
-RESOURCES += resources.qrc
+RESOURCES += resources.qrc images/icons/icons.qrc
 
 
 android: {

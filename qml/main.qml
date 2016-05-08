@@ -43,12 +43,13 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+import Material 0.2
 //import Qt.labs.controls 1.0
 
 import "./getrandomTip.js" as TIP
 import "./storage.js" as ST
 
-Window {
+ApplicationWindow {
     id:appwindow
     visible: true
     width: isMobile() ? Screen.width : 800
@@ -59,7 +60,6 @@ Window {
     color: "#f4f4f4"
 
     title: "卉打卡"
-
 
     onActiveFocusItemChanged: {
             if (activeFocusItem !== null
