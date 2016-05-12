@@ -143,8 +143,8 @@ Item {
             selectedDate: new Date()
             focus: true
 
-            Behavior on height {
-                NumberAnimation { duration: 1000 }
+            Behavior on visible {
+                NumberAnimation { duration: 500 }
             }
 
             style: CalendarStyle {
@@ -293,18 +293,11 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        
-                        if(parent.width < parent.height){
-                            calendar.height = 0;
-                            eventsList.height = parent.height * 0.9
-                        }
-                        
+
                         if(!eventsList.visible){
                             eventsList.visible = true;
                             refreshEvent();
                         }else{
-                            calendar.height = parent.height * 0.6;
-                            eventsList.height = parent.height * 0.3;
                             eventsList.visible = false;
                         }
 
