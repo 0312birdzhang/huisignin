@@ -82,7 +82,7 @@ Window {
                     pageStack.pop()
                 }
                 else {
-                    //msgDlgQuit.open()
+                    msgDlgQuit.open()
                 }
 
                 event.accepted = true
@@ -115,6 +115,16 @@ Window {
      }
 
 
+    MessageDialog {
+        id: msgDlgQuit
+        standardButtons: StandardButton.Yes | StandardButton.No
+        modality: Qt.ApplicationModal
+        title: "确认退出"
+        text: "你确定要退出程序吗？"
+        onYes: {
+            Qt.quit();
+        }
+    }
 
     ListModel {
           id: cbItems
