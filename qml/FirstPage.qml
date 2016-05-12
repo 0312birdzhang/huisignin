@@ -143,7 +143,9 @@ Item {
             selectedDate: new Date()
             focus: true
 
-
+            Behavior on height {
+                NumberAnimation { duration: 1000 }
+            }
 
             style: CalendarStyle {
                 dayDelegate: Item {
@@ -291,10 +293,18 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
+                        
+                        if(parent.width < parent.height){
+                            calendar.height = 0;
+                            eventsList.height = parent.height * 0.9
+                        }
+                        
                         if(!eventsList.visible){
                             eventsList.visible = true;
                             refreshEvent();
                         }else{
+                            calendar.height = parent.height * 0.6;
+                            eventsList.height = parent.height * 0.3;
                             eventsList.visible = false;
                         }
 
@@ -325,7 +335,11 @@ Item {
             width: (parent.width > parent.height ? parent.width * 0.3 - parent.spacing : parent.width)
             height: (parent.height > parent.width ? parent.height * 0.3 - parent.spacing : parent.height)
             border.color: Qt.darker(color, 1.2)
-
+            
+            Behavior on height {
+                NumberAnimation { duration: 1000 }
+            }
+            
             ListView {
                 id: eventsListView
                 spacing: 4

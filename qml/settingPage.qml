@@ -37,6 +37,26 @@ Item{
             bottom:listFotter.top
         }
 
+
+        SwipeArea {
+            id: mouse
+            anchors.fill: parent
+
+            onSwipe: {
+
+                switch (direction) {
+                case "left":
+
+                    break
+                case "right":
+                    ST.loadCombo(cbItems);
+                    pageStack.pop();
+                    break
+                }
+            }
+
+        }
+        
         anchors.margins: 10
         model: settingModel
 
@@ -203,24 +223,7 @@ Item{
         ST.loadCombo(cbItems);
     }
 
-    SwipeArea {
-            id: mouse
-            anchors.fill: parent
-
-            onSwipe: {
-
-                switch (direction) {
-                case "left":
-
-                    break
-                case "right":
-                    ST.loadCombo(cbItems);
-                    pageStack.pop();
-                    break
-                }
-            }
-
-        }
+    
 }
 
 
